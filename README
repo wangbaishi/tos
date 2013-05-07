@@ -3,4 +3,9 @@ TOS
 
 Toy Oprating System
 
+TOS is a hobbyist operating system. The goal of this project is to develop a
+fully featured operating system.
 
+We have finished about 60 percent of all the work at present.
+
+TOS "borrowed" the following files form MIT's XV6: x86.h, bootmain.c.
