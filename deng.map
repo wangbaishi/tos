@@ -51,7 +51,7 @@ Linker script and memory map
 Address of section .text set to 0x100000
                 0x00100000                . = 0x100000
 
-.text           0x00100000     0x1261
+.text           0x00100000     0x1251
  //*(EXCLUDE_FILE(file2.o file1.o) .data*)
  *(.text .stub .text.* .gnu.linkonce.t.*)
  .text          0x00100000       0x23 main.o
@@ -82,98 +82,98 @@ Address of section .text set to 0x100000
  .text          0x001004c0       0x16 pmcs.o
                 0x001004c0                find_free
  *fill*         0x001004d6        0xa 00
- .text          0x001004e0      0x18b interrupt.o
+ .text          0x001004e0      0x17b interrupt.o
                 0x001004e0                Install_Id
-                0x00100540                Init_IDT
-                0x00100590                install_sys_call
-                0x001005c0                default_handler
-                0x001005e0                Init_Idtr
-                0x00100620                Init_intr
- *fill*         0x0010066b        0x5 00
- .text          0x00100670       0x67 interrupts.o
-                0x00100670                set_8259a
-                0x00100693                Load_Idtr
-                0x0010069c                Enable_Int
-                0x0010069e                set_8253
-                0x001006b0                send_eoi
-                0x001006b9                int_handler
-                0x001006c7                sys_call_s
-                0x001006cf                run
- *fill*         0x001006d7        0x9 00
- .text          0x001006e0      0x4e2 vmc.o
-                0x001006e0                set_frame
-                0x001006f0                free_slot
-                0x00100730                drop_temporary_map
-                0x00100780                set_gdt_descriptor
-                0x001007d0                setup_tss
-                0x001007e0                init_tss
-                0x00100830                init_gdt
-                0x00100950                Set_Identity_Map
-                0x001009d0                Init_Vmc
-                0x00100a10                find_free_slot
-                0x00100a70                temporary_map
-                0x00100af0                map_frame
-                0x00100b70                set_kmap
- *fill*         0x00100bc2        0xe 00
- .text          0x00100bd0       0x3c vmcs.o
-                0x00100bd0                enable_paging
-                0x00100be6                load_gdtr
-                0x00100c04                load_tr
- *fill*         0x00100c0c        0x4 00
- .text          0x00100c10      0x154 userinit.o
-                0x00100c10                str_cpy
-                0x00100c40                copy_binary
-                0x00100c70                switch_addr_space
-                0x00100c80                setup_vm
-                0x00100d00                user_init
- *fill*         0x00100d64        0xc 00
- .text          0x00100d70       0x25 userinits.o
-                0x00100d70                goto_user
- *fill*         0x00100d95        0xb 00
- .text          0x00100da0      0x40f proc.o
-                0x00100da0                alloc_proc
-                0x00100e00                free_proc
-                0x00100e20                getpid
-                0x00100e30                find_ready
-                0x00100eb0                copy_kstack
-                0x00100ee0                copy_page
-                0x00100f10                set_interrupt_stack
-                0x00100f30                print_interrupt_stack
-                0x00100f40                exec
-                0x00100f50                copy_mem
-                0x001010b0                fork
-                0x00101180                switch_task
- *fill*         0x001011af        0x1 00
- .text          0x001011b0       0xab sys_call.o
-                0x001011b0                get_parameter_str
-                0x001011c0                set_return_parameter
-                0x001011e0                sys_call
- *fill*         0x0010125b        0x5 00
- .text          0x00101260        0x1 sys_calls.o
-                0x00101260                get_call_num
-                0x00101261                PROVIDE (etext, .)
+                0x00100540                default_handler
+                0x00100550                Init_IDT
+                0x001005a0                install_sys_call
+                0x001005d0                Init_Idtr
+                0x00100610                Init_intr
+ *fill*         0x0010065b        0x5 00
+ .text          0x00100660       0x67 interrupts.o
+                0x00100660                set_8259a
+                0x00100683                Load_Idtr
+                0x0010068c                Enable_Int
+                0x0010068e                set_8253
+                0x001006a0                send_eoi
+                0x001006a9                int_handler
+                0x001006b7                sys_call_s
+                0x001006bf                run
+ *fill*         0x001006c7        0x9 00
+ .text          0x001006d0      0x4e2 vmc.o
+                0x001006d0                set_frame
+                0x001006e0                free_slot
+                0x00100720                drop_temporary_map
+                0x00100770                set_gdt_descriptor
+                0x001007c0                setup_tss
+                0x001007d0                init_tss
+                0x00100820                init_gdt
+                0x00100940                Set_Identity_Map
+                0x001009c0                Init_Vmc
+                0x00100a00                find_free_slot
+                0x00100a60                temporary_map
+                0x00100ae0                map_frame
+                0x00100b60                set_kmap
+ *fill*         0x00100bb2        0xe 00
+ .text          0x00100bc0       0x3c vmcs.o
+                0x00100bc0                enable_paging
+                0x00100bd6                load_gdtr
+                0x00100bf4                load_tr
+ *fill*         0x00100bfc        0x4 00
+ .text          0x00100c00      0x154 userinit.o
+                0x00100c00                str_cpy
+                0x00100c30                copy_binary
+                0x00100c60                switch_addr_space
+                0x00100c70                setup_vm
+                0x00100cf0                user_init
+ *fill*         0x00100d54        0xc 00
+ .text          0x00100d60       0x25 userinits.o
+                0x00100d60                goto_user
+ *fill*         0x00100d85        0xb 00
+ .text          0x00100d90      0x40f proc.o
+                0x00100d90                alloc_proc
+                0x00100df0                free_proc
+                0x00100e10                getpid
+                0x00100e20                find_ready
+                0x00100ea0                copy_kstack
+                0x00100ed0                copy_page
+                0x00100f00                set_interrupt_stack
+                0x00100f20                print_interrupt_stack
+                0x00100f30                exec
+                0x00100f40                copy_mem
+                0x001010a0                fork
+                0x00101170                switch_task
+ *fill*         0x0010119f        0x1 00
+ .text          0x001011a0       0xab sys_call.o
+                0x001011a0                get_parameter_str
+                0x001011b0                set_return_parameter
+                0x001011d0                sys_call
+ *fill*         0x0010124b        0x5 00
+ .text          0x00101250        0x1 sys_calls.o
+                0x00101250                get_call_num
+                0x00101251                PROVIDE (etext, .)
 
-.iplt           0x00101270        0x0
+.iplt           0x00101260        0x0
  .iplt          0x00000000        0x0 main.o
 
-.rel.dyn        0x00101264        0x0
+.rel.dyn        0x00101254        0x0
  .rel.iplt      0x00000000        0x0 main.o
  .rel.text      0x00000000        0x0 main.o
 
 .rodata
  *(.rodata .rodata.* .gnu.linkonce.r.*)
 
-.stab           0x00101261        0x1
-                0x00101261                PROVIDE (__STAB_BEGIN__, .)
+.stab           0x00101251        0x1
+                0x00101251                PROVIDE (__STAB_BEGIN__, .)
  *(.stab)
-                0x00101261                PROVIDE (__STAB_END__, .)
-                0x00101261        0x1 BYTE 0x0
+                0x00101251                PROVIDE (__STAB_END__, .)
+                0x00101251        0x1 BYTE 0x0
 
-.stabstr        0x00101262        0x1
-                0x00101262                PROVIDE (__STABSTR_BEGIN__, .)
+.stabstr        0x00101252        0x1
+                0x00101252                PROVIDE (__STABSTR_BEGIN__, .)
  *(.stabstr)
-                0x00101262                PROVIDE (__STABSTR_END__, .)
-                0x00101262        0x1 BYTE 0x0
+                0x00101252                PROVIDE (__STABSTR_END__, .)
+                0x00101252        0x1 BYTE 0x0
                 0x00102000                . = ALIGN (0x1000)
                 0x00102000                PROVIDE (data, .)
 
