@@ -8,9 +8,7 @@ void get_parameter_str(char *str)
 
 void set_return_parameter(int states)
 {
-	struct interrupt_stack *is;
-	is=cur_proc->istack;
-	is->eax=states;
+	cur_proc->istack->eax=states;	
 }
 
 // system call handler, there is no use to return any value
@@ -29,7 +27,7 @@ void sys_call(void)
 			set_return_parameter(states);
 			return;
 		case 1:
-			fork();		// fork already set the return parameter to 1
+			fork();		// fork has already set the return parameter to 1
 			return;			
 		case 2: 
 			get_parameter_str(par_str);

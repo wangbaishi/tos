@@ -45,9 +45,6 @@ struct proc *find_ready(void)
 		}
 		if(proc_table[i].state==READY){
 			sched_marker=(i+1)%32;
-			/*print_str_c("i=");
-			print_num(i);
-			print_char_c('\n');*/
 			return &proc_table[i];
 		}
 	}
@@ -59,7 +56,6 @@ void switch_task(void)		// scan the process table to find a READY process
 	struct proc *a;
 	a=find_ready();
 	cur_proc=a;
-	//print_num(cur_proc->pid);		
 	setup_tss(a->kstack);
 	run((unsigned int)a->istack);	// run never returns, it first set the sp to a->tf, execute an popa intstruction
 					// then iret

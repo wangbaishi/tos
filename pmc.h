@@ -28,5 +28,3 @@ int free_page(unsigned int *page);	//free a page size memory in user space
 void zero_page(unsigned int *page);
 
 void mem_init(void);			//initiate all required data structures
-
-
