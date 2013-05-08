@@ -9,8 +9,5 @@ log
 *.sym
 *.out
 kernel
-kernel.ld
-makefile~
 *.map
 fp
-
