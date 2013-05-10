@@ -40,11 +40,11 @@ struct proc *find_ready(void)
 		sched_marker=1;
 	}
 	for(i=sched_marker+1;i!=sched_marker;i++){
-		if(i==32){
+		if(i==PROC_NUM){
 			i=1;
 		}
 		if(proc_table[i].state==READY){
-			sched_marker=(i+1)%32;
+			sched_marker=(i+1)%PROC_NUM;
 			return &proc_table[i];
 		}
 	}
@@ -56,10 +56,11 @@ struct proc *find_ready(void)
 void switch_task(void)		
 {				
 	struct proc *a;
+	//save_context(cur_proc->context);
 	a=find_ready();
 	cur_proc=a;
 	setup_tss(a->kstack);
-	run((unsigned int)a->istack);
+	//run((unsigned int)a->istack);
 }
 
 void copy_kstack(unsigned int *sp)

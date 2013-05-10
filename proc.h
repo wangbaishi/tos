@@ -1,4 +1,4 @@
-
+#define PROC_NUM 20
 int sched_marker;	
 
 unsigned int cur_pid;
@@ -22,6 +22,14 @@ struct interrupt_stack{
 	unsigned short padding2;
 }; 
 
+struct context{
+	unsigned int edi;
+	unsigned int esi;
+	unsigned int ebx;
+	unsigned int ebp;
+	unsigned int eip;
+};
+
 struct proc{
 	unsigned pid;	
 	long timer;	
@@ -29,19 +37,13 @@ struct proc{
 	//struct context context;
 	struct interrupt_stack *istack;	// interrupt_stack is what the kernel stack looks like when an interrupt occors(without error code);
 					// this pointer is set up by fork
+	struct context *context;
 	unsigned int * pdt;		// page directory table
 	int state;			// state of this process
 	char name[8];			// name of this process
 };
 
-struct context{
-	unsigned int eax;
-	unsigned int ebx;
-	unsigned int ecx;
-	unsigned int edx;
-};
-
-struct proc proc_table[20];
+struct proc proc_table[PROC_NUM];
 
 struct proc *cur_proc;		// current running process
 int flag_cur_proc;
