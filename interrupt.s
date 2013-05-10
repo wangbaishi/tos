@@ -10,7 +10,8 @@
 %define IRQ_8	0x28				; IRQs 8-15 mapped to use interrupts 0x28-0x36
  
 global set_8259a,Load_Idtr,Enable_Int,set_8253,send_eoi,int_handler,sys_call_s,run
-extern default_handler,sys_call
+global timer_s
+extern default_handler,sys_call,timer_c
 
 set_8259a:
 	mov	al, ICW_1
@@ -74,7 +75,6 @@ int_handler:
 	pushad
 	call default_handler
 	call send_eoi
-	sti		; do I really need to sti here?
 	popad
 	iret
 
@@ -84,8 +84,16 @@ sys_call_s:
 	popad
 	iret
 
+timer_s:
+	pushad
+	call timer_c
+	call send_eoi
+	popad
+	iret
+
 run:
 	mov ebp,[esp+4]
 	mov esp,ebp
 	popa
 	iret
+

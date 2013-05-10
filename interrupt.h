@@ -16,7 +16,10 @@ struct Idtr{
 struct Int_Desp IDT[Num_of_Ints];
 struct Idtr idtr;
 
-extern int sys_call_s(void);
+long time;
+
+extern void sys_call_s(void);		// system call handler
+extern void timer_s(void);		// timer interrupt handler
 extern void set_8259a(void);
 extern void Load_Idtr(struct Idtr address);
 extern void Enable_Int(void);

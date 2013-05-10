@@ -51,14 +51,15 @@ struct proc *find_ready(void)
 	return &proc_table[0];	// process 0 is always ready
 }
 
-void switch_task(void)		// scan the process table to find a READY process
-{				// and puts it to run 
+// scan the process table to find a READY process
+// and puts it to run.
+void switch_task(void)		
+{				
 	struct proc *a;
 	a=find_ready();
 	cur_proc=a;
 	setup_tss(a->kstack);
-	run((unsigned int)a->istack);	// run never returns, it first set the sp to a->tf, execute an popa intstruction
-					// then iret
+	run((unsigned int)a->istack);
 }
 
 void copy_kstack(unsigned int *sp)

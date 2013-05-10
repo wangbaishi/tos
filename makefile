@@ -1,11 +1,11 @@
 CC = $(TOOLPREFIX)gcc
-CFLAGS = -fno-pic -static -fno-builtin -fno-strict-aliasing -O2 -Wall # -MD -ggdb -m32 
+CFLAGS = -fno-pic -static -fno-builtin -fno-strict-aliasing -O2 -Wall #-MD -ggdb -m32 
 CFLAGS += $(shell $(CC) -fno-stack-protector -E -x c /dev/null >/dev/null 2>&1 && echo -fno-stack-protector)
 my_os: bootloader kernel
 	dd if=/dev/zero of=boot.img bs=512 count=20160	# ten M bytes
 	dd if=/dev/zero of=bootsec bs=512 count=1
+	dd if=bootloader of=bootsec conv=notrunc	
 	python sign.py
-	dd if=bootloader of=bootsec conv=notrunc
 	dd if=bootsec of=boot.img bs=512 count=1 conv=notrunc
 	dd if=kernel of=boot.img seek=1 conv=notrunc	
 

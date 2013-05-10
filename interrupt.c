@@ -1,5 +1,7 @@
 #include"interrupt.h"
 #include"sys_call.h"
+#include"print.h"
+#include"proc.h"
 
 int Install_Id(void* addr,unsigned int gdt_sel,unsigned char flags,unsigned int Num)
 {
@@ -32,7 +34,19 @@ void Init_Idtr(void)
 
 void default_handler(void)	// this is the default c handler, get called from int_handler
 {
-	//print_char_c('a');	
+	print_str_c("Unhandled interruption ");	
+	for(;;);
+}
+
+void timer_c(void)
+{
+	//print_str_c("tick ");
+	time++;
+	cur_proc->timer++;
+	if(cur_proc->timer>=10){
+		cur_proc->timer=0;
+		switch_task();
+	}
 }
 
 void Init_IDT(void) 
@@ -49,6 +63,11 @@ void install_sys_call(void)
 	Install_Id(sys_call_s,gdt_code_sel,flag_32bit|flag_present|flag_ring3,0x80);
 }
 
+void install_timer(void)
+{
+	Install_Id(timer_s,gdt_code_sel,flag_32bit|flag_present,0x20);
+}
+
 void Init_intr(void)
 {	
 	set_8259a();
@@ -56,5 +75,6 @@ void Init_intr(void)
 	Init_IDT();
 	Init_Idtr();
 	install_sys_call();
+	install_timer();
 	Enable_Int();
 }

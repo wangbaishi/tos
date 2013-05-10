@@ -23,7 +23,8 @@ struct interrupt_stack{
 }; 
 
 struct proc{
-	unsigned pid;		
+	unsigned pid;	
+	long timer;	
 	unsigned int * kstack;		// points to the base address of this process's kernel stack
 	//struct context context;
 	struct interrupt_stack *istack;	// interrupt_stack is what the kernel stack looks like when an interrupt occors(without error code);

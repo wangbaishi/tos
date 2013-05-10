@@ -1,4 +1,5 @@
 #include"pmc.h"
+#include"print.h"
 
 void zero_page(unsigned int *page)
 {
