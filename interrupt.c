@@ -35,17 +35,22 @@ void Init_Idtr(void)
 void default_handler(void)	// this is the default c handler, get called from int_handler
 {
 	print_str_c("Unhandled interruption ");	
-	for(;;);
+	//for(;;);
 }
 
 void timer_c(void)
 {
-	//print_str_c("tick ");
+	print_str_c("tick ");
 	time++;
-	cur_proc->timer++;
-	if(cur_proc->timer>=10){
-		cur_proc->timer=0;
-		switch_task();
+	//print_num(flag_cur_proc);
+	//print_char_c('\n');
+	if(flag_cur_proc){	
+		cur_proc->timer++;
+		if(cur_proc->timer>=20){
+			cur_proc->timer=0;
+			print_str_c("switch task\n");
+			switch_task_s();
+		}
 	}
 }
 

@@ -35,7 +35,8 @@ void sys_call(void)
 			set_return_parameter(states);
 			return;
 		case 3: 
-			switch_task();	// switch_task() will never returns
+			//for(;;);
+			switch_task_s();	// switch_task() will never returns
 	}	
 }
 

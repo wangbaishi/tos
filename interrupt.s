@@ -80,6 +80,7 @@ int_handler:
 
 sys_call_s:
 	pushad
+	sti
 	call sys_call
 	popad
 	iret
@@ -92,8 +93,6 @@ timer_s:
 	iret
 
 run:
-	mov ebp,[esp+4]
-	mov esp,ebp
 	popa
 	iret
 

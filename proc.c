@@ -52,15 +52,14 @@ struct proc *find_ready(void)
 }
 
 // scan the process table to find a READY process
-// and puts it to run.
+// and puts it to run. called by switch_task_s
 void switch_task(void)		
 {				
 	struct proc *a;
-	//save_context(cur_proc->context);
 	a=find_ready();
 	cur_proc=a;
 	setup_tss(a->kstack);
-	//run((unsigned int)a->istack);
+	switch_context((unsigned int)a->context);	// switch_context never returns
 }
 
 void copy_kstack(unsigned int *sp)
@@ -86,12 +85,12 @@ void copy_mem(unsigned int *pdt)
 {
 	unsigned int *p_pdt,*p_pt,*pt,*temp_addr1,*p_page,*page,*temp_addr2,flags;
 	int i,j;
-	p_pdt=cur_proc->pdt;	// parent pdt
+	p_pdt=cur_proc->pdt;		// parent pdt
 	for(i=2;i<Items_in_PDT;i++)	// item 0 and item 1 are used for kernel pdt
 	{
 		if(p_pdt[i]&PDE_present)
 		{
-			//pdt[i]=p_pdt[i];	 // bug, set_frame uses bitwise OR to set the frame
+			//pdt[i]=p_pdt[i];	 // bug
 			pdt[i]=0;
 			flags=p_pdt[i]&0x0fff;
 			pdt[i]=pdt[i]|flags;		// copy flags
@@ -128,8 +127,12 @@ void set_interrupt_stack(struct proc *a)
 {
 	char *sp;
 	sp=(char *)(a->kstack);
-	a->istack=(unsigned int *)(sp-sizeof(struct interrupt_stack));
+	sp-=sizeof(struct interrupt_stack);
+	a->istack=(unsigned int *)sp;
 	a->istack->eax=1;		// fork return 1
+	sp-=sizeof(struct context);
+	a->context=(struct context *)sp;
+	a->context->eip=(unsigned int)run;
 }
 
 void print_interrupt_stack(unsigned int *istack)
@@ -140,24 +143,14 @@ void print_interrupt_stack(unsigned int *istack)
 int fork(void)		// creat a copy of the process who called this funtion
 {			// return 1 if successed.
 	struct proc *a;
-	//print_str_c("fork() called\n");
 	a=alloc_proc();
-	//print_str_c("alloc_proc() returned\n");
 	a->kstack=(unsigned int *)((unsigned char *)kalloc()+KSTACK_SIZE);
-	//print_str_c("prepare to call copy_kstack()\n");	
 	copy_kstack(a->kstack);
 	set_interrupt_stack(a);
-	//print_interrupt_stack(a->istack);
-	//print_str_c("copy_kstack() returned\n");
 	a->pdt=(unsigned int *)kalloc(); 
 	set_kmap(a->pdt);
-	//print_str_c("set_kmap returned\n");
 	copy_mem(a->pdt);
-	//print_str_c("copy mem returned\n");
 	a->state=READY;
-	//enable_paging((unsigned int)a->pdt);
-	//print_str_c("pdt[2] is: ");
-	//print_num(a->pdt[2]);	
 	return 1;
 }
 

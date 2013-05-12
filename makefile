@@ -23,7 +23,7 @@ fp: fp.s
 	#objcopy --input binary --output elf32-i386 --binary-architecture i386 fp.out fp
 	objdump -S fp.out>fp.asm
 
-kernel: main.c print.c pmc.c pmc.s vmc.c vmc.s print.s interrupt.c interrupt.s userinit.c userinit.s proc.c sys_call.c sys_call.s fp
+kernel: main.c print.c pmc.c pmc.s vmc.c vmc.s print.s interrupt.c interrupt.s userinit.c userinit.s proc.c sys_call.c sys_call.s proc.s fp
 	cc -o main.o -c $(CFLAGS) -fno-pic -nostdinc main.c
 	cc -o printc.o -c $(CFLAGS) -nostdinc print.c
 	cc -o pmc.o -c $(CFLAGS) -nostdinc pmc.c
@@ -32,6 +32,7 @@ kernel: main.c print.c pmc.c pmc.s vmc.c vmc.s print.s interrupt.c interrupt.s u
 	cc -o userinit.o -c $(CFLAGS) -nostdinc userinit.c
 	cc -o proc.o -c $(CFLAGS) -nostdinc proc.c
 	cc -o sys_call.o -c $(CFLAGS) -nostdinc sys_call.c
+	nasm -felf -o procs.o proc.s
 	nasm -felf -o sys_calls.o sys_call.s
 	nasm -felf -o userinits.o userinit.s
 	nasm -felf -o pmcs.o pmc.s
@@ -40,7 +41,7 @@ kernel: main.c print.c pmc.c pmc.s vmc.c vmc.s print.s interrupt.c interrupt.s u
 	nasm -felf -o prints.o print.s	
 	ld -M > kernel.map -e main -Ttext 0x100000 -o kernel \
 		main.o prints.o printc.o pmc.o pmcs.o interrupt.o interrupts.o vmc.o vmcs.o\
-		userinit.o userinits.o proc.o sys_call.o sys_calls.o -b binary fp
+		userinit.o userinits.o proc.o sys_call.o sys_calls.o procs.o -b binary fp
 	objdump -S kernel>main.asm
 	objdump -t kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > kernel.sym
 

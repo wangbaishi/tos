@@ -31,13 +31,13 @@ struct context{
 };
 
 struct proc{
+	struct context *context;	// this address will be accessed through assembly code, place it in the first position
 	unsigned pid;	
 	long timer;	
 	unsigned int * kstack;		// points to the base address of this process's kernel stack
 	//struct context context;
 	struct interrupt_stack *istack;	// interrupt_stack is what the kernel stack looks like when an interrupt occors(without error code);
 					// this pointer is set up by fork
-	struct context *context;
 	unsigned int * pdt;		// page directory table
 	int state;			// state of this process
 	char name[8];			// name of this process
@@ -68,4 +68,7 @@ void switch_task(void);
 
 void set_interrupt_stack(struct proc *);
 
-void switch_task(void);
+extern void switch_task_s(void);
+extern void switch_context(unsigned int addr);
+
+

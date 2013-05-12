@@ -13,4 +13,5 @@ kernel.ld
 makefile~
 *.map
 fp
-
+bochsout.txt
+bootsec
