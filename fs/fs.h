@@ -1,7 +1,7 @@
 // definition of disk block  inode structure  superblock structure
 
 #define BLOCK_SIZE 512
-#define ILIST_START 2		// there is no 0th block, the first block is allocated to the sblock
+#define ILIST_START 2		// there is no 0th block, the first block is occupied by sblock
 #define INODE_SIZE (sizeof(Inode))
 #define INODES_P_BLOCK (BLOCK_SIZE/INODE_SIZE)
 #define DATA_BEGAIN 20
@@ -16,14 +16,14 @@ typedef struct{
 	int type;      			// type of file
 	int number;   			// each inode has an unique number   
 	int nlink;    			// how many links refered to this inode
-	unsigned int size;     		// the size of this file in byte
+	unsigned int size;     		// size of this file in byte
 	int ctime[2]; 			// creat time
 	int vtime[2]; 			// last visited time
-	unsigned int addr[12]; 		// address
+	unsigned int addr[12]; 		// data block references
 }Inode;
 
 typedef struct{		// sizeof(dir)==16
-	int inum;	// so a block of 512 byte may contain 32 dirs
+	int inum;	// so a block may contain 32 dirs
 	int mode;
 	char name[8];
 }dir;

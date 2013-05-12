@@ -44,5 +44,15 @@ kernel: main.c print.c pmc.c pmc.s vmc.c vmc.s print.s interrupt.c interrupt.s u
 		userinit.o userinits.o proc.o sys_call.o sys_calls.o procs.o -b binary fp
 	objdump -S kernel>main.asm
 	objdump -t kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > kernel.sym
+	
+clean:
+	rm *.o
+	rm kernel.map
+	rm kernel.sym
+	rm fp
+	rm fp.asm
+	rm kernel
+	rm bootsec
+	rm bootloader
 
 

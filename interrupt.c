@@ -40,15 +40,12 @@ void default_handler(void)	// this is the default c handler, get called from int
 
 void timer_c(void)
 {
-	print_str_c("tick ");
+	//print_str_c("tick ");
 	time++;
-	//print_num(flag_cur_proc);
-	//print_char_c('\n');
 	if(flag_cur_proc){	
 		cur_proc->timer++;
-		if(cur_proc->timer>=20){
+		if(cur_proc->timer>=17){
 			cur_proc->timer=0;
-			print_str_c("switch task\n");
 			switch_task_s();
 		}
 	}
