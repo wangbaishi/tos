@@ -51,6 +51,7 @@ clean:
 	rm kernel.sym
 	rm fp
 	rm fp.asm
+	rm fp.out
 	rm kernel
 	rm bootsec
 	rm bootloader

@@ -19,4 +19,4 @@ We have finished about 60 percent of all the work at present.
 	physical memory management
 	boot
 
-TOS "borrowed" the following files form MIT's XV6: x86.h, bootmain.c.
+TOS "borrowed" the following files from MIT's XV6: "x86.h", "bootmain.c".

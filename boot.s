@@ -45,10 +45,10 @@ pmode:
 	mov es,ax
 	mov esp,90000h
 
-	call bootmain
+	call bootmain	; bootmain should never returns
 
-	hlt
-
+	hlt		
+	
 GDT:
 	dd 0	; null descriptor
 	dd 0 
@@ -74,5 +74,3 @@ toc:
 	dw End_of_GDT-GDT-1
 	dd GDT
 message: db "hello,deng!"
-;times 510-($-$$) db 0
-;dw 0xaa55

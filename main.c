@@ -4,17 +4,19 @@
 #include"vmc.h" 
 #include"userinit.h"
 
+// this is the "true" starting point of this system.
+// loaded by bootloader at physical memory 0x100000(1M)
+
 void main()   
 { 
-	clr_screen();       
+	clr_screen();   // clear the screen
 
-	mem_init();   
+	mem_init();   	// initialise physical memory controller
 	
-	Init_Vmc();
+	Init_Vmc();	// initialise virtual memeory controller
 
-	Init_intr();
+	Init_intr();	// initialise interrupt 
 
-	user_init();
-	
-	//for(;;);
+	user_init();	// user_init() creats the first process in this system
+
 }  
